@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/all.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css"/>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_a7cc0de9e51b89b3a63d958a351ad94e {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+                .leaflet-container { font-size: 1rem; }
+            </style>
+
+            <style>html, body {
+                width: 100%;
+                height: 100%;
+                margin: 0;
+                padding: 0;
+            }
+            </style>
+
+            <style>#map {
+                position:absolute;
+                top:0;
+                bottom:0;
+                right:0;
+                left:0;
+                }
+            </style>
+
+            <script>
+                L_NO_TOUCH = false;
+                L_DISABLE_3D = false;
+            </script>
+
+        
+</head>
+<body>
+    
+    
+            <div class="folium-map" id="map_a7cc0de9e51b89b3a63d958a351ad94e" ></div>
+        
+</body>
+<script>
+    
+    
+            var map_a7cc0de9e51b89b3a63d958a351ad94e = L.map(
+                "map_a7cc0de9e51b89b3a63d958a351ad94e",
+                {
+                    center: [37.175, 127.0],
+                    crs: L.CRS.EPSG3857,
+                    ...{
+  "zoom": 12,
+  "zoomControl": true,
+  "preferCanvas": false,
+}
+
+                }
+            );
+
+            
+
+        
+    
+            var tile_layer_ece785c97c8f5b74a74c31858165b9da = L.tileLayer(
+                "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+                {
+  "minZoom": 0,
+  "maxZoom": 19,
+  "maxNativeZoom": 19,
+  "noWrap": false,
+  "attribution": "\u0026copy; \u003ca href=\"https://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors",
+  "subdomains": "abc",
+  "detectRetina": false,
+  "tms": false,
+  "opacity": 1,
+}
+
+            );
+        
+    
+            tile_layer_ece785c97c8f5b74a74c31858165b9da.addTo(map_a7cc0de9e51b89b3a63d958a351ad94e);
+        
+    
+            var rectangle_5def38a421e7416bc443dd88a6c5c98a = L.rectangle(
+                [[37.1, 126.9], [37.25, 127.1]],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "blue", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 1.0, "smoothFactor": 1.0, "stroke": true, "weight": 2}
+            ).addTo(map_a7cc0de9e51b89b3a63d958a351ad94e);
+        
+    
+            var circle_marker_af40d1a6abb8269462bead596f668d38 = L.circleMarker(
+                [37.2018, 127.0125],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_a7cc0de9e51b89b3a63d958a351ad94e);
+        
+    
+        var popup_3476ba0f51e00dbdd225ea759eceb0fc = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_dad3f2ba274bf786cad63d2a9d6c70bb = $(`<div id="html_dad3f2ba274bf786cad63d2a9d6c70bb" style="width: 100.0%; height: 100.0%;">1차 - 태안읍 안녕리 (1986-09-15)</div>`)[0];
+                popup_3476ba0f51e00dbdd225ea759eceb0fc.setContent(html_dad3f2ba274bf786cad63d2a9d6c70bb);
+            
+        
+
+        circle_marker_af40d1a6abb8269462bead596f668d38.bindPopup(popup_3476ba0f51e00dbdd225ea759eceb0fc)
+        ;
+
+        
+    
+    
+            var circle_marker_b8dcc536bf9cb5e17bfce1db91433e8c = L.circleMarker(
+                [37.2058, 127.0357],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_a7cc0de9e51b89b3a63d958a351ad94e);
+        
+    
+        var popup_f87094d221d8c9ba0a96d217b652a6ec = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_57a4974115fdbe5084144392895f73ed = $(`<div id="html_57a4974115fdbe5084144392895f73ed" style="width: 100.0%; height: 100.0%;">2차 - 태안읍 진안리 (1986-10-20)</div>`)[0];
+                popup_f87094d221d8c9ba0a96d217b652a6ec.setContent(html_57a4974115fdbe5084144392895f73ed);
+            
+        
+
+        circle_marker_b8dcc536bf9cb5e17bfce1db91433e8c.bindPopup(popup_f87094d221d8c9ba0a96d217b652a6ec)
+        ;
+
+        
+    
+    
+            var circle_marker_22247556f9d9e117adba9fa397c115a3 = L.circleMarker(
+                [37.2018, 127.0125],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_a7cc0de9e51b89b3a63d958a351ad94e);
+        
+    
+        var popup_4783c33f6bd723eee2a540b34e6c9ea8 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_5c495d9267a27e9bd4f5b9c7aa92b470 = $(`<div id="html_5c495d9267a27e9bd4f5b9c7aa92b470" style="width: 100.0%; height: 100.0%;">3차 - 태안읍 안녕리 (1986-12-12)</div>`)[0];
+                popup_4783c33f6bd723eee2a540b34e6c9ea8.setContent(html_5c495d9267a27e9bd4f5b9c7aa92b470);
+            
+        
+
+        circle_marker_22247556f9d9e117adba9fa397c115a3.bindPopup(popup_4783c33f6bd723eee2a540b34e6c9ea8)
+        ;
+
+        
+    
+    
+            var circle_marker_d10cfcbe5ddcd30a5121117505bac65c = L.circleMarker(
+                [37.1602, 126.9847],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_a7cc0de9e51b89b3a63d958a351ad94e);
+        
+    
+        var popup_7945dac599df197cd7f75b79a9af47c5 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_055b88b7b734c1bee08841b94a5a0872 = $(`<div id="html_055b88b7b734c1bee08841b94a5a0872" style="width: 100.0%; height: 100.0%;">4차 - 정남면 관항리 (1986-12-14)</div>`)[0];
+                popup_7945dac599df197cd7f75b79a9af47c5.setContent(html_055b88b7b734c1bee08841b94a5a0872);
+            
+        
+
+        circle_marker_d10cfcbe5ddcd30a5121117505bac65c.bindPopup(popup_7945dac599df197cd7f75b79a9af47c5)
+        ;
+
+        
+    
+    
+            var circle_marker_4e78bd551d875bd20de176fcbcc2cdad = L.circleMarker(
+                [37.1852, 127.0248],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_a7cc0de9e51b89b3a63d958a351ad94e);
+        
+    
+        var popup_d2805dfd9ab1c2bc663009c729c354c6 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_acb0a83204e25ee686201de98cd8146f = $(`<div id="html_acb0a83204e25ee686201de98cd8146f" style="width: 100.0%; height: 100.0%;">5차 - 태안읍 황계리 (1987-01-10)</div>`)[0];
+                popup_d2805dfd9ab1c2bc663009c729c354c6.setContent(html_acb0a83204e25ee686201de98cd8146f);
+            
+        
+
+        circle_marker_4e78bd551d875bd20de176fcbcc2cdad.bindPopup(popup_d2805dfd9ab1c2bc663009c729c354c6)
+        ;
+
+        
+    
+    
+            var circle_marker_1c07fb33f4539ce3d9c85231b50c279c = L.circleMarker(
+                [37.2058, 127.0357],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_a7cc0de9e51b89b3a63d958a351ad94e);
+        
+    
+        var popup_6e00192b3929782f78ebb48a27c2eea7 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_c3db0d4c19e8d9603e4f5d41a3054d7e = $(`<div id="html_c3db0d4c19e8d9603e4f5d41a3054d7e" style="width: 100.0%; height: 100.0%;">6차 - 태안읍 진안리 (1987-05-02)</div>`)[0];
+                popup_6e00192b3929782f78ebb48a27c2eea7.setContent(html_c3db0d4c19e8d9603e4f5d41a3054d7e);
+            
+        
+
+        circle_marker_1c07fb33f4539ce3d9c85231b50c279c.bindPopup(popup_6e00192b3929782f78ebb48a27c2eea7)
+        ;
+
+        
+    
+    
+            var circle_marker_0a9557772f5312bca2672c0e029f19c8 = L.circleMarker(
+                [37.1435, 126.9312],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_a7cc0de9e51b89b3a63d958a351ad94e);
+        
+    
+        var popup_475355b9715945e35947b18c69fca0a5 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_87f07a10e5ce2503be169576bd02fe94 = $(`<div id="html_87f07a10e5ce2503be169576bd02fe94" style="width: 100.0%; height: 100.0%;">7차 - 팔탄면 가재리 (1988-09-07)</div>`)[0];
+                popup_475355b9715945e35947b18c69fca0a5.setContent(html_87f07a10e5ce2503be169576bd02fe94);
+            
+        
+
+        circle_marker_0a9557772f5312bca2672c0e029f19c8.bindPopup(popup_475355b9715945e35947b18c69fca0a5)
+        ;
+
+        
+    
+    
+            var circle_marker_e5e09ea562832746f7b62576173351c1 = L.circleMarker(
+                [37.2058, 127.0357],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_a7cc0de9e51b89b3a63d958a351ad94e);
+        
+    
+        var popup_23d53fde5bda148f86b02045a6344b1b = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_6ce56dc13f04dee24c3b6b70e1280d0c = $(`<div id="html_6ce56dc13f04dee24c3b6b70e1280d0c" style="width: 100.0%; height: 100.0%;">8차 - 태안읍 진안리 (1988-09-16)</div>`)[0];
+                popup_23d53fde5bda148f86b02045a6344b1b.setContent(html_6ce56dc13f04dee24c3b6b70e1280d0c);
+            
+        
+
+        circle_marker_e5e09ea562832746f7b62576173351c1.bindPopup(popup_23d53fde5bda148f86b02045a6344b1b)
+        ;
+
+        
+    
+    
+            var circle_marker_8c9db33f9e6a09a0aa823f64f3a39076 = L.circleMarker(
+                [37.2015, 127.0524],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_a7cc0de9e51b89b3a63d958a351ad94e);
+        
+    
+        var popup_30978adef615438e4a32b675384e31b2 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_40b7adbec322554fbced708bd1012e9c = $(`<div id="html_40b7adbec322554fbced708bd1012e9c" style="width: 100.0%; height: 100.0%;">9차 - 태안읍 병점리 (1990-11-15)</div>`)[0];
+                popup_30978adef615438e4a32b675384e31b2.setContent(html_40b7adbec322554fbced708bd1012e9c);
+            
+        
+
+        circle_marker_8c9db33f9e6a09a0aa823f64f3a39076.bindPopup(popup_30978adef615438e4a32b675384e31b2)
+        ;
+
+        
+    
+    
+            var circle_marker_e6ea8c02b3a07299a887f2c8090b8805 = L.circleMarker(
+                [37.1897, 127.0774],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_a7cc0de9e51b89b3a63d958a351ad94e);
+        
+    
+        var popup_e135e50b0cbaa393db66a438f54ad6aa = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_fd5e28baa4b9c7f6b8e9d6b0f54f95d0 = $(`<div id="html_fd5e28baa4b9c7f6b8e9d6b0f54f95d0" style="width: 100.0%; height: 100.0%;">10차 - 동탄면 반송리 (1991-04-03)</div>`)[0];
+                popup_e135e50b0cbaa393db66a438f54ad6aa.setContent(html_fd5e28baa4b9c7f6b8e9d6b0f54f95d0);
+            
+        
+
+        circle_marker_e6ea8c02b3a07299a887f2c8090b8805.bindPopup(popup_e135e50b0cbaa393db66a438f54ad6aa)
+        ;
+
+        
+    
+    
+            var marker_76d43f58ab9f54fcf85fa5e7f842f8ba = L.marker(
+                [37.2075, 127.0389],
+                {
+}
+            ).addTo(map_a7cc0de9e51b89b3a63d958a351ad94e);
+        
+    
+            var icon_6e32a43bbe2d44238372e2840de5e714 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "black",
+  "iconColor": "white",
+  "icon": "home",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_07c5eef914e32b38cbffc664f20d8aab = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_749e86a8d16468e9834b94262f9a0962 = $(`<div id="html_749e86a8d16468e9834b94262f9a0962" style="width: 100.0%; height: 100.0%;">범인 거주지: 태안읍 진안1리 (이춘재 본적)</div>`)[0];
+                popup_07c5eef914e32b38cbffc664f20d8aab.setContent(html_749e86a8d16468e9834b94262f9a0962);
+            
+        
+
+        marker_76d43f58ab9f54fcf85fa5e7f842f8ba.bindPopup(popup_07c5eef914e32b38cbffc664f20d8aab)
+        ;
+
+        
+    
+    
+                marker_76d43f58ab9f54fcf85fa5e7f842f8ba.setIcon(icon_6e32a43bbe2d44238372e2840de5e714);
+            
+</script>
+</html>

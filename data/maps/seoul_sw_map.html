@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/all.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css"/>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_04c8746f5e3147533736092734b096e0 {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+                .leaflet-container { font-size: 1rem; }
+            </style>
+
+            <style>html, body {
+                width: 100%;
+                height: 100%;
+                margin: 0;
+                padding: 0;
+            }
+            </style>
+
+            <style>#map {
+                position:absolute;
+                top:0;
+                bottom:0;
+                right:0;
+                left:0;
+                }
+            </style>
+
+            <script>
+                L_NO_TOUCH = false;
+                L_DISABLE_3D = false;
+            </script>
+
+        
+</head>
+<body>
+    
+    
+            <div class="folium-map" id="map_04c8746f5e3147533736092734b096e0" ></div>
+        
+</body>
+<script>
+    
+    
+            var map_04c8746f5e3147533736092734b096e0 = L.map(
+                "map_04c8746f5e3147533736092734b096e0",
+                {
+                    center: [37.5, 126.875],
+                    crs: L.CRS.EPSG3857,
+                    ...{
+  "zoom": 12,
+  "zoomControl": true,
+  "preferCanvas": false,
+}
+
+                }
+            );
+
+            
+
+        
+    
+            var tile_layer_6a6f567a8b4672b26a2ef231d3fd2508 = L.tileLayer(
+                "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+                {
+  "minZoom": 0,
+  "maxZoom": 19,
+  "maxNativeZoom": 19,
+  "noWrap": false,
+  "attribution": "\u0026copy; \u003ca href=\"https://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors",
+  "subdomains": "abc",
+  "detectRetina": false,
+  "tms": false,
+  "opacity": 1,
+}
+
+            );
+        
+    
+            tile_layer_6a6f567a8b4672b26a2ef231d3fd2508.addTo(map_04c8746f5e3147533736092734b096e0);
+        
+    
+            var rectangle_309070fbb0f2a42fb4878130d24c1cbb = L.rectangle(
+                [[37.45, 126.8], [37.55, 126.95]],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "blue", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 1.0, "smoothFactor": 1.0, "stroke": true, "weight": 2}
+            ).addTo(map_04c8746f5e3147533736092734b096e0);
+        
+    
+            var circle_marker_57da66b770fd6a29c575c4d7aa692339 = L.circleMarker(
+                [37.4912, 126.8567],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_04c8746f5e3147533736092734b096e0);
+        
+    
+        var popup_8fd8b493e4bcc4fe90ea20e4e1591922 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_5d36e34c1c22d3a68992ee054ca909c9 = $(`<div id="html_5d36e34c1c22d3a68992ee054ca909c9" style="width: 100.0%; height: 100.0%;">1차 - 구로구 개봉동 (2024-01-10)</div>`)[0];
+                popup_8fd8b493e4bcc4fe90ea20e4e1591922.setContent(html_5d36e34c1c22d3a68992ee054ca909c9);
+            
+        
+
+        circle_marker_57da66b770fd6a29c575c4d7aa692339.bindPopup(popup_8fd8b493e4bcc4fe90ea20e4e1591922)
+        ;
+
+        
+    
+    
+            var circle_marker_6fa1c09db2898661f61195cea1b26159 = L.circleMarker(
+                [37.4823, 126.8912],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_04c8746f5e3147533736092734b096e0);
+        
+    
+        var popup_43bf0db92d6f5cd8ada9a383fe3ec65f = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_51b16b771e2459e8d3304a356b149dbe = $(`<div id="html_51b16b771e2459e8d3304a356b149dbe" style="width: 100.0%; height: 100.0%;">2차 - 관악구 신림동 (2024-02-03)</div>`)[0];
+                popup_43bf0db92d6f5cd8ada9a383fe3ec65f.setContent(html_51b16b771e2459e8d3304a356b149dbe);
+            
+        
+
+        circle_marker_6fa1c09db2898661f61195cea1b26159.bindPopup(popup_43bf0db92d6f5cd8ada9a383fe3ec65f)
+        ;
+
+        
+    
+    
+            var circle_marker_03efb0aa6d6e373200e6ac3c07afe21d = L.circleMarker(
+                [37.5089, 126.8734],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_04c8746f5e3147533736092734b096e0);
+        
+    
+        var popup_0fcf22315c7c7cde33d33bfce33bab94 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_66539e28d3fc1362709c7f672faed370 = $(`<div id="html_66539e28d3fc1362709c7f672faed370" style="width: 100.0%; height: 100.0%;">3차 - 양천구 신월동 (2024-02-25)</div>`)[0];
+                popup_0fcf22315c7c7cde33d33bfce33bab94.setContent(html_66539e28d3fc1362709c7f672faed370);
+            
+        
+
+        circle_marker_03efb0aa6d6e373200e6ac3c07afe21d.bindPopup(popup_0fcf22315c7c7cde33d33bfce33bab94)
+        ;
+
+        
+    
+    
+            var circle_marker_83defa3251e1389d0d72c68401653323 = L.circleMarker(
+                [37.4756, 126.8845],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_04c8746f5e3147533736092734b096e0);
+        
+    
+        var popup_7379ec8967d451b670153fa4da7908f4 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_edfbbf62c21036cdaeee5032968be5e7 = $(`<div id="html_edfbbf62c21036cdaeee5032968be5e7" style="width: 100.0%; height: 100.0%;">4차 - 관악구 봉천동 (2024-03-18)</div>`)[0];
+                popup_7379ec8967d451b670153fa4da7908f4.setContent(html_edfbbf62c21036cdaeee5032968be5e7);
+            
+        
+
+        circle_marker_83defa3251e1389d0d72c68401653323.bindPopup(popup_7379ec8967d451b670153fa4da7908f4)
+        ;
+
+        
+    
+    
+            var circle_marker_3200be886e5e45cbf54a0bcf77db4447 = L.circleMarker(
+                [37.4967, 126.8623],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 8, "stroke": true, "weight": 3}
+            ).addTo(map_04c8746f5e3147533736092734b096e0);
+        
+    
+        var popup_020fb8f35889c8993842b108b800df26 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_b8b2870d3ddd782973c90b24428df11b = $(`<div id="html_b8b2870d3ddd782973c90b24428df11b" style="width: 100.0%; height: 100.0%;">5차 - 구로구 오류동 (2024-04-12)</div>`)[0];
+                popup_020fb8f35889c8993842b108b800df26.setContent(html_b8b2870d3ddd782973c90b24428df11b);
+            
+        
+
+        circle_marker_3200be886e5e45cbf54a0bcf77db4447.bindPopup(popup_020fb8f35889c8993842b108b800df26)
+        ;
+
+        
+    
+    
+            var marker_3240014127710958323841a25187c796 = L.marker(
+                [37.4889, 126.8712],
+                {
+}
+            ).addTo(map_04c8746f5e3147533736092734b096e0);
+        
+    
+            var icon_7f5ea96d2cca8ca241a4cf3997ef4378 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "black",
+  "iconColor": "white",
+  "icon": "home",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_c17738aa7b3d2d3c8eeaec8747bb2c4e = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_85d5625c09b5681864eac1de755f0ebf = $(`<div id="html_85d5625c09b5681864eac1de755f0ebf" style="width: 100.0%; height: 100.0%;">범인 거주지: 가상 - 구로구 항동</div>`)[0];
+                popup_c17738aa7b3d2d3c8eeaec8747bb2c4e.setContent(html_85d5625c09b5681864eac1de755f0ebf);
+            
+        
+
+        marker_3240014127710958323841a25187c796.bindPopup(popup_c17738aa7b3d2d3c8eeaec8747bb2c4e)
+        ;
+
+        
+    
+    
+                marker_3240014127710958323841a25187c796.setIcon(icon_7f5ea96d2cca8ca241a4cf3997ef4378);
+            
+</script>
+</html>
