@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rossmo 지리 프로파일링</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="sidebar">
+        <h2>지리 프로파일링</h2>
+        
+        <div class="mode-toggle">
+            <button class="mode-btn active" data-mode="investigation">🔍 수사</button>
+            <button class="mode-btn" data-mode="prevention">🛡️ 예방</button>
+        </div>
+        
+        <div id="modeDesc" class="mode-desc">
+            사건 발생지점으로 범인 거주지를 예측합니다.
+        </div>
+        
+        <div class="section">
+            <label>도시 선택</label>
+            <select id="citySelect">
+                <option value="hwaseong">화성 (실제 사건 - 검증)</option>
+                <option value="daejeon">대전 (시연)</option>
+                <option value="seoul_sw">서울 서남부 (시연)</option>
+                <option value="jeonju">전주 (시연)</option>
+            </select>
+        </div>
+        
+        <div class="section" id="algoSection">
+            <label>알고리즘 버전</label>
+            <select id="algoSelect">
+                <option value="original">원본 Rossmo (맨해튼 거리)</option>
+                <option value="improved">환경 가중</option>
+                <option value="road" selected>도로망 거리 (최종)</option>
+            </select>
+        </div>
+        
+        <div class="section" id="safetySection" style="display:none;">
+            <label>안전 시설 표시</label>
+            <div class="checkbox-item">
+                <input type="checkbox" id="showConvenience"> 
+                <label for="showConvenience">🏪 편의점 (24시간, 밝음)</label>
+            </div>
+            <div class="checkbox-item">
+                <input type="checkbox" id="showPolice"> 
+                <label for="showPolice">🚓 경찰서 / 파출소</label>
+            </div>
+            <div class="checkbox-item">
+                <input type="checkbox" id="showFuel"> 
+                <label for="showFuel">⛽ 주유소 (24시간)</label>
+            </div>
+            <div class="checkbox-item">
+                <input type="checkbox" id="showLamp"> 
+                <label for="showLamp">💡 가로등 (화성만)</label>
+            </div>
+        </div>
+        
+        <div class="section" id="routeSection" style="display:none;">
+            <label>🚶 안전 귀갓길</label>
+            <div class="route-info">
+                <strong>사용법</strong><br/>
+                지도 <b>우클릭</b>: 출발지·도착지 지정<br/>
+                (2번 우클릭 = 자동 경로 계산)
+            </div>
+            <div class="param" style="margin-top:10px;">
+                <span>안전 우선도: <span id="safetyLabel">0.5</span></span>
+                <input type="range" id="safetySlider" min="0" max="1" step="0.1" value="0.5">
+            </div>
+            <button id="clearRouteBtn">경로 초기화</button>
+            <div id="routeResult" style="margin-top:10px;"></div>
+        </div>
+        
+        <div class="section">
+            <label id="pointListLabel">사건 지점 (지도 클릭으로 추가)</label>
+            <div id="pointList">
+                <div class="empty">아직 지점이 없습니다</div>
+            </div>
+            <button id="clearBtn">모두 지우기</button>
+            <button id="loadDefaultBtn">기본 사건 불러오기</button>
+        </div>
+        
+        <div class="section">
+            <label>파라미터</label>
+            <div class="param">
+                <span>완충 반경 (m): <span id="bufferLabel">1000</span></span>
+                <input type="range" id="bufferSlider" min="200" max="3000" step="100" value="1000">
+            </div>
+            <div class="param">
+                <span>감쇠 지수 f: <span id="fLabel">1.2</span></span>
+                <input type="range" id="fSlider" min="0.5" max="2.5" step="0.1" value="1.2">
+            </div>
+        </div>
+        
+        <div class="section" id="resultSection" style="display:none;">
+            <label>결과</label>
+            <div id="result"></div>
+        </div>
+    </div>
+    
+    <div id="map"></div>
+    
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/leaflet.heat@0.2.0/dist/leaflet-heat.js"></script>
+    <script src="algorithm.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
