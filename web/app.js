@@ -66,23 +66,30 @@ async function geocodeAddress(query, cityHint) {
     const bounds = getCityBounds(cityHint);
     const viewbox = `${bounds.min_lon},${bounds.max_lat},${bounds.max_lon},${bounds.min_lat}`;
     
-    const urls = [
-        `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(query)}&format=json&limit=1&countrycodes=kr&viewbox=${viewbox}&bounded=1`,
-        `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(query)}&format=json&limit=1&countrycodes=kr`,
-        `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(query + ' 대한민국')}&format=json&limit=1`
-    ];
+    const normalized = query.trim().replace(/\s+/g, ' ');
+    const noSpace = normalized.replace(/\s+/g, '');
     
-    for (const url of urls) {
-        try {
-            const res = await fetch(url);
-            const data = await res.json();
-            if (data.length > 0) {
-                return { lat: parseFloat(data[0].lat), lon: parseFloat(data[0].lon), name: data[0].display_name };
+    const variants = normalized === noSpace ? [normalized] : [normalized, noSpace];
+    
+    for (const q of variants) {
+        const urls = [
+            `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(q)}&format=json&limit=1&countrycodes=kr&viewbox=${viewbox}&bounded=1`,
+            `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(q)}&format=json&limit=1&countrycodes=kr`,
+            `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(q + ' 대한민국')}&format=json&limit=1`
+        ];
+        
+        for (const url of urls) {
+            try {
+                const res = await fetch(url);
+                const data = await res.json();
+                if (data.length > 0) {
+                    return { lat: parseFloat(data[0].lat), lon: parseFloat(data[0].lon), name: data[0].display_name };
+                }
+            } catch (e) {
+                console.error("geocoding failed", e);
             }
-        } catch (e) {
-            console.error("geocoding failed", e);
+            await new Promise(r => setTimeout(r, 200));
         }
-        await new Promise(r => setTimeout(r, 300));
     }
     return null;
 }
