@@ -11,9 +11,9 @@ const MODE_DESC = {
 };
 
 const FEATURE_STYLE = {
-    convenience: { color: '#4dabf7', emoji: '🏪', name: '편의점' },
-    police: { color: '#1c7ed6', emoji: '🚓', name: '경찰서' },
-    fuel: { color: '#ffd43b', emoji: '⛽', name: '주유소' },
+    police: { color: '#e03131', emoji: '🚓', name: '경찰서' },
+    convenience: { color: '#228be6', emoji: '🏪', name: '편의점' },
+    fuel: { color: '#fd7e14', emoji: '⛽', name: '주유소' },
     lamp: { color: '#ffe066', emoji: '💡', name: '가로등' }
 };
 
@@ -50,6 +50,41 @@ function smoothPath(coords) {
     }
     smoothed.push(coords[coords.length - 1]);
     return smoothed;
+}
+
+function getCityBounds(city) {
+    const b = {
+        hwaseong: { min_lat: 37.10, max_lat: 37.25, min_lon: 126.90, max_lon: 127.10 },
+        daejeon:  { min_lat: 36.28, max_lat: 36.40, min_lon: 127.30, max_lon: 127.45 },
+        jeonju:   { min_lat: 35.78, max_lat: 35.86, min_lon: 127.08, max_lon: 127.18 },
+        seoul_sw: { min_lat: 37.45, max_lat: 37.55, min_lon: 126.80, max_lon: 126.95 }
+    };
+    return b[city];
+}
+
+async function geocodeAddress(query, cityHint) {
+    const bounds = getCityBounds(cityHint);
+    const viewbox = `${bounds.min_lon},${bounds.max_lat},${bounds.max_lon},${bounds.min_lat}`;
+    
+    const urls = [
+        `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(query)}&format=json&limit=1&countrycodes=kr&viewbox=${viewbox}&bounded=1`,
+        `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(query)}&format=json&limit=1&countrycodes=kr`,
+        `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(query + ' 대한민국')}&format=json&limit=1`
+    ];
+    
+    for (const url of urls) {
+        try {
+            const res = await fetch(url);
+            const data = await res.json();
+            if (data.length > 0) {
+                return { lat: parseFloat(data[0].lat), lon: parseFloat(data[0].lon), name: data[0].display_name };
+            }
+        } catch (e) {
+            console.error("geocoding failed", e);
+        }
+        await new Promise(r => setTimeout(r, 300));
+    }
+    return null;
 }
 
 async function loadCity(city) {
@@ -137,11 +172,11 @@ function renderSafetyOverlays() {
         
         items.forEach(f => {
             const m = L.circleMarker([f.lat, f.lon], {
-                radius: type === 'lamp' ? 3 : 5,
+                radius: type === 'lamp' ? 3 : (type === 'police' ? 7 : 5),
                 color: style.color,
                 fillColor: style.color,
-                fillOpacity: 0.7,
-                weight: 1
+                fillOpacity: 0.8,
+                weight: type === 'police' ? 2 : 1
             }).addTo(map).bindPopup(`${style.emoji} ${style.name}`);
             safetyMarkers[type].push(m);
         });
@@ -185,6 +220,41 @@ function clearRoute() {
     shortestLine = null;
     safeLine = null;
     document.getElementById('routeResult').innerHTML = '';
+    document.getElementById('startSearch').value = '';
+    document.getElementById('endSearch').value = '';
+}
+
+async function searchRouteByAddress() {
+    const startQuery = document.getElementById('startSearch').value.trim();
+    const endQuery = document.getElementById('endSearch').value.trim();
+    
+    if (!startQuery || !endQuery) {
+        document.getElementById('routeResult').innerHTML = '<span style="color:#fa5252;">출발지와 도착지를 모두 입력하세요.</span>';
+        return;
+    }
+    
+    document.getElementById('routeResult').innerHTML = '<span>주소 검색 중...</span>';
+    
+    clearRoute();
+    document.getElementById('startSearch').value = startQuery;
+    document.getElementById('endSearch').value = endQuery;
+    
+    const startRes = await geocodeAddress(startQuery, currentCity);
+    if (!startRes) {
+        document.getElementById('routeResult').innerHTML = `<span style="color:#fa5252;">출발지 "${startQuery}" 검색 실패</span>`;
+        return;
+    }
+    
+    const endRes = await geocodeAddress(endQuery, currentCity);
+    if (!endRes) {
+        document.getElementById('routeResult').innerHTML = `<span style="color:#fa5252;">도착지 "${endQuery}" 검색 실패</span>`;
+        return;
+    }
+    
+    setRoutePoint(startRes.lat, startRes.lon);
+    setRoutePoint(endRes.lat, endRes.lon);
+    
+    map.fitBounds([[startRes.lat, startRes.lon], [endRes.lat, endRes.lon]], { padding: [50, 50] });
 }
 
 function computeRoute() {
@@ -454,7 +524,7 @@ function recomputePrevention(buffer, f, g) {
         고위험 격자 (>70%): <span style="color:red;font-weight:bold;">${highRiskCount}개</span><br/>
         중위험 격자 (40-70%): <span style="color:orange;font-weight:bold;">${mediumRiskCount}개</span><br/>
         <br/>
-        <small style="color:#666;">※ 우클릭으로 출발지→도착지 지정하면 안전 귀갓길 표시</small>
+        <small style="color:#666;">※ 검색창 또는 지도 우클릭으로 안전 귀갓길 지정</small>
     `;
 }
 
@@ -523,6 +593,14 @@ document.getElementById('safetySlider').addEventListener('input', (e) => {
 document.getElementById('clearBtn').addEventListener('click', clearPoints);
 document.getElementById('loadDefaultBtn').addEventListener('click', loadDefaultCrimes);
 document.getElementById('clearRouteBtn').addEventListener('click', clearRoute);
+document.getElementById('searchRouteBtn').addEventListener('click', searchRouteByAddress);
+
+document.getElementById('startSearch').addEventListener('keypress', (e) => {
+    if (e.key === 'Enter') searchRouteByAddress();
+});
+document.getElementById('endSearch').addEventListener('keypress', (e) => {
+    if (e.key === 'Enter') searchRouteByAddress();
+});
 
 document.querySelectorAll('.mode-btn').forEach(btn => {
     btn.addEventListener('click', () => switchMode(btn.dataset.mode));

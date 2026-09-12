@@ -94,10 +94,19 @@ body {
     font-size: 13px;
     margin: 0;
     cursor: pointer;
-    display: inline;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
 }
 
-select, button {
+.dot {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+}
+
+select, button, input[type="text"] {
     width: 100%;
     padding: 8px 12px;
     border: 1px solid #ced4da;
@@ -107,7 +116,12 @@ select, button {
     cursor: pointer;
 }
 
-select:focus { outline: none; border-color: #339af0; }
+input[type="text"] { cursor: text; }
+
+select:focus, input[type="text"]:focus { 
+    outline: none; 
+    border-color: #339af0; 
+}
 
 button {
     background: #339af0;
@@ -119,11 +133,49 @@ button {
 
 button:hover { background: #228be6; }
 
-button#clearBtn {
+button#clearBtn, button#clearRouteBtn {
     background: #868e96;
 }
 
-button#clearBtn:hover { background: #495057; }
+button#clearBtn:hover, button#clearRouteBtn:hover { 
+    background: #495057; 
+}
+
+.route-search {
+    background: white;
+    padding: 12px;
+    border-radius: 6px;
+    margin-bottom: 10px;
+}
+
+.search-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 8px;
+}
+
+.search-icon {
+    font-size: 18px;
+    width: 24px;
+    text-align: center;
+}
+
+.search-row input {
+    flex: 1;
+    padding: 6px 10px;
+    font-size: 13px;
+}
+
+.route-info {
+    background: #fff9db;
+    padding: 8px 10px;
+    border-radius: 4px;
+    font-size: 12px;
+    line-height: 1.5;
+    border-left: 3px solid #fab005;
+    margin-bottom: 10px;
+}
 
 #pointList {
     margin: 8px 0;
@@ -185,18 +237,4 @@ button#clearBtn:hover { background: #495057; }
 #map {
     flex: 1;
     height: 100vh;
-}
-
-.route-info {
-    background: #fff9db;
-    padding: 10px;
-    border-radius: 4px;
-    font-size: 12px;
-    line-height: 1.5;
-    border-left: 3px solid #fab005;
-}
-
-#clearRouteBtn {
-    background: #868e96;
-    margin-top: 8px;
 }

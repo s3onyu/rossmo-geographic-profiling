@@ -42,29 +42,39 @@
         <div class="section" id="safetySection" style="display:none;">
             <label>안전 시설 표시</label>
             <div class="checkbox-item">
-                <input type="checkbox" id="showConvenience"> 
-                <label for="showConvenience">🏪 편의점 (24시간, 밝음)</label>
+                <input type="checkbox" id="showPolice"> 
+                <label for="showPolice"><span class="dot" style="background:#e03131;"></span>🚓 경찰서 / 파출소</label>
             </div>
             <div class="checkbox-item">
-                <input type="checkbox" id="showPolice"> 
-                <label for="showPolice">🚓 경찰서 / 파출소</label>
+                <input type="checkbox" id="showConvenience"> 
+                <label for="showConvenience"><span class="dot" style="background:#228be6;"></span>🏪 편의점 (24시간)</label>
             </div>
             <div class="checkbox-item">
                 <input type="checkbox" id="showFuel"> 
-                <label for="showFuel">⛽ 주유소 (24시간)</label>
+                <label for="showFuel"><span class="dot" style="background:#fd7e14;"></span>⛽ 주유소 (24시간)</label>
             </div>
             <div class="checkbox-item">
                 <input type="checkbox" id="showLamp"> 
-                <label for="showLamp">💡 가로등 (화성만)</label>
+                <label for="showLamp"><span class="dot" style="background:#ffe066;"></span>💡 가로등 (화성만)</label>
             </div>
         </div>
         
         <div class="section" id="routeSection" style="display:none;">
             <label>🚶 안전 귀갓길</label>
+            <div class="route-search">
+                <div class="search-row">
+                    <span class="search-icon">🏃</span>
+                    <input type="text" id="startSearch" placeholder="출발지 (예: 동탄역)">
+                </div>
+                <div class="search-row">
+                    <span class="search-icon">🏠</span>
+                    <input type="text" id="endSearch" placeholder="도착지 (예: 병점역)">
+                </div>
+                <button id="searchRouteBtn">🔍 경로 검색</button>
+            </div>
             <div class="route-info">
-                <strong>사용법</strong><br/>
-                지도 <b>우클릭</b>: 출발지·도착지 지정<br/>
-                (2번 우클릭 = 자동 경로 계산)
+                <b>검색 팁</b>: 지명·건물명 (예: "동탄역", "화성시청") <br/>
+                또는 지도 <b>우클릭</b> 두 번으로 지정
             </div>
             <div class="param" style="margin-top:10px;">
                 <span>안전 우선도: <span id="safetyLabel">0.5</span></span>
