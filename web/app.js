@@ -567,7 +567,25 @@ function recomputeInvestigation(buffer, f, g) {
     `;
     if (cityData.home && currentCity === 'hwaseong') {
         const error = haversineDistance(topCell.lat, topCell.lon, cityData.home.lat, cityData.home.lon);
+        
+        let homeDistMin = Infinity;
+        let homeIdx = 0;
+        for (let i = 0; i < cityData.cells.length; i++) {
+            const d = manhattanDistance(cityData.cells[i].lat, cityData.cells[i].lon, cityData.home.lat, cityData.home.lon);
+            if (d < homeDistMin) {
+                homeDistMin = d;
+                homeIdx = i;
+            }
+        }
+        const homeProb = probs[homeIdx];
+        let rank = 1;
+        for (const p of probs) {
+            if (p > homeProb) rank++;
+        }
+        const percentile = (rank / probs.length * 100).toFixed(1);
+        
         resultHtml += `<br/><strong>실제와 오차</strong>: ${Math.round(error)}m`;
+        resultHtml += `<br/><strong>실제 거주지 순위</strong>: 상위 ${percentile}% (${rank}/${probs.length})`;
     }
     document.getElementById('result').innerHTML = resultHtml;
 }
