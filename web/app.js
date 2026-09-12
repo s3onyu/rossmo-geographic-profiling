@@ -257,50 +257,120 @@ async function searchRouteByAddress() {
     map.fitBounds([[startRes.lat, startRes.lon], [endRes.lat, endRes.lon]], { padding: [50, 50] });
 }
 
-function computeRoute() {
+async function computeRoute() {
     if (!routeStart || !routeEnd) return;
     
     document.getElementById('routeResult').innerHTML = '<span>경로 계산 중...</span>';
     
-    setTimeout(() => {
-        const startIdx = findNearestCell(cityData.cells, routeStart.lat, routeStart.lon);
-        const endIdx = findNearestCell(cityData.cells, routeEnd.lat, routeEnd.lon);
+    async function fetchRoute(waypoints) {
+        const coords = waypoints.map(p => `${p.lon},${p.lat}`).join(';');
+        const url = `https://router.project-osrm.org/route/v1/foot/${coords}?overview=full&geometries=geojson`;
+        try {
+            const res = await fetch(url);
+            const data = await res.json();
+            if (data.routes && data.routes.length > 0) {
+                return {
+                    coords: data.routes[0].geometry.coordinates.map(c => [c[1], c[0]]),
+                    distance: data.routes[0].distance
+                };
+            }
+        } catch (e) {
+            console.error("OSRM failed", e);
+        }
+        return null;
+    }
+    
+    const shortestData = await fetchRoute([routeStart, routeEnd]);
+    if (!shortestData) {
+        document.getElementById('routeResult').innerHTML = '<span style="color:#fa5252;">경로 계산 실패</span>';
+        return;
+    }
+    
+    const buffer = parseInt(document.getElementById('bufferSlider').value);
+    const safetyWeight = parseFloat(document.getElementById('safetySlider').value);
+    
+    function routeTotalRisk(coords) {
+        let totalRisk = 0;
+        const sampleRate = Math.max(1, Math.floor(coords.length / 100));
+        let sampleCount = 0;
+        for (let i = 0; i < coords.length; i += sampleRate) {
+            const [lat, lon] = coords[i];
+            for (const p of points) {
+                const d = manhattanDistance(lat, lon, p.lat, p.lon);
+                if (d < buffer * 2) {
+                    totalRisk += Math.exp(-d / (buffer * 0.5));
+                }
+            }
+            sampleCount++;
+        }
+        return totalRisk;
+    }
+    
+    let safeData = shortestData;
+    
+    if (points.length > 0 && safetyWeight > 0) {
+        const midLat = (routeStart.lat + routeEnd.lat) / 2;
+        const midLon = (routeStart.lon + routeEnd.lon) / 2;
         
-        const buffer = parseInt(document.getElementById('bufferSlider').value);
-        const safetyScores = computeSafetyScores(cityData.cells, points, cityData.safety, buffer);
+        const dLat = routeEnd.lat - routeStart.lat;
+        const dLon = routeEnd.lon - routeStart.lon;
+        const norm = Math.sqrt(dLat*dLat + dLon*dLon);
         
-        const shortest = findPath(cityData.cells, cityData.rows, cityData.cols, startIdx, endIdx, safetyScores, 0);
-        const safetyWeight = parseFloat(document.getElementById('safetySlider').value);
-        const safe = findPath(cityData.cells, cityData.rows, cityData.cols, startIdx, endIdx, safetyScores, safetyWeight);
+        const perpLat = -dLon / (norm + 1e-9);
+        const perpLon = dLat / (norm + 1e-9);
         
-        if (shortestLine) map.removeLayer(shortestLine);
-        if (safeLine) map.removeLayer(safeLine);
+        const detourMagnitude = norm * (0.4 + safetyWeight * 0.8);
         
-        let shortestCoords = shortest.path.map(i => [cityData.cells[i].lat, cityData.cells[i].lon]);
-        shortestCoords = smoothPath(smoothPath(shortestCoords));
-        shortestLine = L.polyline(shortestCoords, { color: '#fa5252', weight: 4, opacity: 0.7, dashArray: '8, 8' }).addTo(map);
+        const waypoints = [
+            { lat: midLat + perpLat * detourMagnitude, lon: midLon + perpLon * detourMagnitude },
+            { lat: midLat - perpLat * detourMagnitude, lon: midLon - perpLon * detourMagnitude },
+            { lat: midLat + perpLat * detourMagnitude * 0.5, lon: midLon + perpLon * detourMagnitude * 0.5 },
+            { lat: midLat - perpLat * detourMagnitude * 0.5, lon: midLon - perpLon * detourMagnitude * 0.5 }
+        ];
         
-        let safeCoords = safe.path.map(i => [cityData.cells[i].lat, cityData.cells[i].lon]);
-        safeCoords = smoothPath(smoothPath(safeCoords));
-        safeLine = L.polyline(safeCoords, { color: '#40c057', weight: 5, opacity: 0.9 }).addTo(map);
+        const candidates = [shortestData];
+        for (const wp of waypoints) {
+            const detourData = await fetchRoute([routeStart, wp, routeEnd]);
+            if (detourData) candidates.push(detourData);
+        }
         
-        const extraDist = safe.distance - shortest.distance;
-        const extraPercent = shortest.distance > 0 ? Math.round(extraDist / shortest.distance * 100) : 0;
-        const walkingSpeed = 1.4;
-        const shortestMin = Math.round(shortest.distance / walkingSpeed / 60);
-        const safeMin = Math.round(safe.distance / walkingSpeed / 60);
-        
-        document.getElementById('routeResult').innerHTML = `
-            <div style="background:white;padding:10px;border-radius:4px;">
-                <div style="color:#fa5252;"><b>🔴 최단</b>: ${Math.round(shortest.distance)}m (${shortestMin}분)</div>
-                <div style="color:#40c057;"><b>🟢 안전</b>: ${Math.round(safe.distance)}m (${safeMin}분)</div>
-                <div style="margin-top:8px;font-size:12px;color:#666;">
-                    +${Math.round(extraDist)}m 우회 (${extraPercent}% 증가)<br/>
-                    <b>${safeMin - shortestMin}분 더</b> 걸리지만 위험 지역 피함
-                </div>
+        const shortestDist = shortestData.distance;
+        let bestScore = Infinity;
+        for (const c of candidates) {
+            const risk = routeTotalRisk(c.coords);
+            const distPenalty = (c.distance / shortestDist - 1) * 500;
+            const score = distPenalty + safetyWeight * risk * 200;
+            if (score < bestScore) {
+                bestScore = score;
+                safeData = c;
+            }
+        }
+    }
+    
+    if (shortestLine) map.removeLayer(shortestLine);
+    if (safeLine) map.removeLayer(safeLine);
+    
+    shortestLine = L.polyline(shortestData.coords, { color: '#fa5252', weight: 4, opacity: 0.7, dashArray: '8, 8' }).addTo(map);
+    safeLine = L.polyline(safeData.coords, { color: '#40c057', weight: 5, opacity: 0.9 }).addTo(map);
+    
+    const extraDist = safeData.distance - shortestData.distance;
+    const extraPercent = shortestData.distance > 0 ? Math.round(extraDist / shortestData.distance * 100) : 0;
+    const walkingSpeed = 1.4;
+    const shortestMin = Math.round(shortestData.distance / walkingSpeed / 60);
+    const safeMin = Math.round(safeData.distance / walkingSpeed / 60);
+    
+    const sameRoute = safeData === shortestData;
+    
+    document.getElementById('routeResult').innerHTML = `
+        <div style="background:white;padding:10px;border-radius:4px;">
+            <div style="color:#fa5252;"><b>🔴 최단</b>: ${Math.round(shortestData.distance)}m (${shortestMin}분)</div>
+            <div style="color:#40c057;"><b>🟢 안전</b>: ${Math.round(safeData.distance)}m (${safeMin}분)</div>
+            <div style="margin-top:8px;font-size:12px;color:#666;">
+                ${sameRoute ? '위험 지역 없음, 최단 경로가 안전' : (extraDist > 0 ? `+${Math.round(extraDist)}m 우회 (${extraPercent}% 증가)` : '거의 동일')}<br/>
+                ${!sameRoute ? `<b>${Math.abs(safeMin - shortestMin)}분 ${safeMin > shortestMin ? '더' : '덜'} 걸림</b>` : ''}
             </div>
-        `;
-    }, 50);
+        </div>
+    `;
 }
 
 function addPoint(lat, lon) {
